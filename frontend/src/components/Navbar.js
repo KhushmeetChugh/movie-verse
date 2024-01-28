@@ -1,39 +1,42 @@
-import Container from "react-bootstrap/Container";
+// Navcomp.js
+import React from "react";
+import { Link } from "react-router-dom";
+import {Navbar,Container} from "react-bootstrap";
 import Nav from "react-bootstrap/Nav";
-import Navbar from "react-bootstrap/Navbar";
-import NavLink from "react-bootstrap/esm/NavLink";
 
 function Navcomp() {
   return (
     <Navbar expand="lg" variant="dark" bg="dark">
       <Container>
-        <Navbar.Brand href="#home">MovieVerse</Navbar.Brand>
+        <Navbar.Brand as={Link} to="/">
+          MovieVerse
+        </Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="me-auto">
-            <NavLink as={NavLink} to="/">
+            <Nav.Link as={Link} to="/">
               Home
-            </NavLink>
-            <NavLink as={NavLink} to="/movies">
+            </Nav.Link>
+            <Nav.Link as={Link} to="/movies">
               Movies
-            </NavLink>
-            <NavLink as={NavLink} to="/blogs">
+            </Nav.Link>
+            <Nav.Link as={Link} to="/blogs">
               Blogs
-            </NavLink>
-            <NavLink as={NavLink} to="/feedback">
+            </Nav.Link>
+            <Nav.Link as={Link} to="/feedback">
               Feedback
-            </NavLink>
-            <NavLink as={NavLink} to="/aboutus">
+            </Nav.Link>
+            <Nav.Link as={Link} to="/aboutus">
               About_us
-            </NavLink>
+            </Nav.Link>
           </Nav>
           <Nav>
-            <NavLink as={NavLink} to="/signin">
+            <Nav.Link as={Link} to="/signin">
               Signin
-            </NavLink>
-            <NavLink as={NavLink} to="/signup">
+            </Nav.Link>
+            <Nav.Link as={Link} to="/signup">
               Signup
-            </NavLink>
+            </Nav.Link>
           </Nav>
         </Navbar.Collapse>
       </Container>
