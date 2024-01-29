@@ -6,7 +6,7 @@ import Signup from "./components/Signup";
 import Carosal from "./components/Carosal";
 import MoviePage from "./components/MoviePage";
 import Profile from "./components/ProfileSection.js";
-
+import LogoutButton from "./components/Logout.js";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 function App() {
@@ -20,6 +20,7 @@ function App() {
           <Route path="/signup" element={<Signup />} />
           <Route path="/movie/:id" element={<MoviePage />} />
           <Route path="/profile" element={<Profile />} />
+          <Route path="/logout" element={<LogoutButton />} />
         </Routes>
         <Footercomp />
       </Router>

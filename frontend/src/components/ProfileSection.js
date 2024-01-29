@@ -3,6 +3,26 @@ import React from 'react';
 import '../index.css';
 
 const Profile = () => {
+  const hclick=async()=>{
+    const response = await fetch("http://localhost:4000/profile", {
+          method: "POST",
+          headers: {
+            'Content-Type': 'application/json',
+            'Cookie': document.cookie,
+          },
+          credentials: "include",
+          // body: JSON.stringify({
+          //   email: email,
+          //   password: password,
+          // }),
+        });
+        
+        const responseData = await response.json();
+
+      // Do something with the responseData, e.g., update UI, redirect, etc.
+      console.log(responseData);
+
+  }
   return (
     <div className="container mt-5">
       <div className="row">
@@ -14,7 +34,7 @@ const Profile = () => {
         </div>
         <div className="col-md-8">
           {/* Username */}
-          <h2 className="mb-3">Username</h2>
+          <h2 className="mb-3" onClick={hclick}>Username</h2>
 
           {/* Movies Reviewed */}
           <div className="mb-4">

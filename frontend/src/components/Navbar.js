@@ -37,6 +37,9 @@ function Navcomp() {
             <Nav.Link as={Link} to="/signup">
               Signup
             </Nav.Link>
+            <Nav.Link as={Link} to="/logout">
+              Logout
+            </Nav.Link>
           </Nav>
         </Navbar.Collapse>
       </Container>

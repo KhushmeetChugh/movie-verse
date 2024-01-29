@@ -1,35 +1,42 @@
 // Signin.js
 
-import React, { useState } from 'react';
-import '../index.css';
+import React, { useState } from "react";
+import "../index.css";
 
 const Signin = () => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [token,setToken]=useState('');
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [token, setToken] = useState("");
 
   const handleLogin = async () => {
     // In a real application, you would handle login logic here
     console.log(`Logging in with email: ${email} and password: ${password}`);
     try {
-      const response = await fetch('http://localhost:4000/login', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({
-      email: email,
-      password: password,
-    }),
-  });
+      const response = await fetch("http://localhost:4000/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          email: email,
+          password: password,
+        }),
+        credentials: "include",
+      });
+      console.log(response.headers.getSetCookie())
+      // Assuming response is in JSON format
+      const responseData = await response.json();
+
+      // Do something with the responseData, e.g., update UI, redirect, etc.
+      console.log(responseData);
 
       if (response.ok) {
-        const data = await response.json();
+        const data = await response;
         console.log(data);
-        const token=data.token;
-        setToken(token)
+        const token = data.token;
+        setToken(token);
       } else {
-        console.log(await response.text());  // Log the response text for error cases
+        console.log(await response.text()); // Log the response text for error cases
       }
     } catch (err) {
       console.log("error=", err);
