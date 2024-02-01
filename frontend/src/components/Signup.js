@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import '../index.css'; // Import the CSS file for styling
+import '../index.css';
 
 const Signup = () => {
   const [username, setUsername] = useState('');
@@ -9,61 +9,25 @@ const Signup = () => {
   const [loading, setLoading] = useState(false);
   const [signupSuccess, setSignupSuccess] = useState(false);
   const [error, setError] = useState('');
-
-  const isEmailValid = (email) => {
-    // Simple email format validation using a regular expression
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    return emailRegex.test(email);
-  };
-
-  const emailExists = async (email) => {
-    try {
-      const response = await fetch('http://localhost:4000/checkEmail', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ email }),
-      });
-
-      if (response.ok) {
-        const { exists } = await response.json();
-        return exists;
-      } else {
-        throw new Error('Unable to check email existence');
-      }
-    } catch (error) {
-      console.error('Error checking email existence:', error.message);
-      throw error;
-    }
-  };
+  const [file, setFile] = useState(null);
 
   const handleSignup = async () => {
     try {
+      const formData = new FormData();
+
+      // Append file to FormData
+      formData.append("file", file);
+
+      // Append other form fields
+      formData.append("username", username);
+      formData.append("email", email);
+      formData.append("password", password);
+
       setLoading(true);
-
-      // Check if the email is in the correct format
-      if (!isEmailValid(email)) {
-        throw new Error('Invalid email format');
-      }
-
-      // Check if the email already exists in the database
-      const emailAlreadyExists = await emailExists(email);
-      if (emailAlreadyExists) {
-        throw new Error('Email already exists');
-      }
-
-      // Check if the password and confirm password match
-      if (password !== confirmPassword) {
-        throw new Error('Passwords do not match');
-      }
 
       const response = await fetch('http://localhost:4000/signup', {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ username, email, password }),
+        body: formData,
       });
 
       if (response.ok) {
@@ -88,6 +52,17 @@ const Signup = () => {
     <div className="signup-container">
       <h2>Signup</h2>
       <form className="signup-form">
+        <div>
+          <img src=" https://firebasestorage.googleapis.com/v0/b/movieverse-f7355.appspot.com/o/files%2Fuse%20case%20diagram%20SIH%20(2).jpg%20%20%20%20%20%20%202024-02-01T21%3A02%3A31.237Z?alt=media&token=99f62777-d25f-4361-bada-2465a76ca7de" alt="Profile"
+        className="rounded-circle"
+        style={{
+          width: '100px', // Set the width as per your requirement
+          height: '50px', // Set the height as per your requirement
+          objectFit: 'cover', // Preserve aspect ratio and cover container
+        }}/>
+          <h1>File Upload</h1>
+          <input type="file" onChange={(event) => setFile(event.target.files[0])} />
+        </div>
         <label>Username:</label>
         <input type="text" value={username} onChange={(e) => setUsername(e.target.value)} />
 

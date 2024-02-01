@@ -7,7 +7,9 @@ import Carosal from "./components/Carosal";
 import MoviePage from "./components/MoviePage";
 import Profile from "./components/ProfileSection.js";
 import LogoutButton from "./components/Logout.js";
+import ImageUpload from "./components/ImageUpload.js";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+
 
 function App() {
   return (
@@ -20,7 +22,8 @@ function App() {
           <Route path="/signup" element={<Signup />} />
           <Route path="/movie/:id" element={<MoviePage />} />
           <Route path="/profile" element={<Profile />} />
-          <Route path="/logout" element={<LogoutButton />} />
+          <Route path="/logout" element={<ImageUpload  />} />
+          <Route path="/imageUpload" element={<ImageUpload />} />
         </Routes>
         <Footercomp />
       </Router>
