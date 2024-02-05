@@ -1,45 +1,32 @@
-// Signin.js
-
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import "../index.css";
 
-const Signin = () => {
+const Signin = ({ handleLogin }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [token, setToken] = useState("");
 
-  const handleLogin = async () => {
-    // In a real application, you would handle login logic here
-    console.log(`Logging in with email: ${email} and password: ${password}`);
+  const navigate = useNavigate();
+
+  const handler = async () => {
     try {
-      const response = await fetch("http://localhost:4000/login", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          email: email,
-          password: password,
-        }),
-        credentials: "include",
-      });
-      console.log(response.headers.getSetCookie())
-      // Assuming response is in JSON format
-      const responseData = await response.json();
+      const user = await handleLogin(email, password,setToken);
+      console.log(user)
 
-      // Do something with the responseData, e.g., update UI, redirect, etc.
-      console.log(responseData);
-
-      if (response.ok) {
-        const data = await response;
-        console.log(data);
-        const token = data.token;
-        setToken(token);
+      if (user && user.role === "user") {
+        // Redirect to the home page for regular users
+        navigate("/");
+      } else if (user && user.role === "admin") {
+        // Redirect to the admin page for admin users
+        navigate("/");
       } else {
-        console.log(await response.text()); // Log the response text for error cases
+        // Handle unexpected user data or role
+        console.error("Unexpected user data or role");
       }
-    } catch (err) {
-      console.log("error=", err);
+    } catch (error) {
+      console.error("Login failed:", error);
+      // Handle login failure if needed
     }
   };
 
@@ -66,7 +53,7 @@ const Signin = () => {
             />
           </label>
           <br />
-          <button type="button" onClick={handleLogin}>
+          <button type="button" onClick={handler}>
             Login
           </button>
         </form>

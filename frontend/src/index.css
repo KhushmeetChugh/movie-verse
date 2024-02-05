@@ -91,6 +91,23 @@ button:disabled {
   background-color: #ccc;
   cursor: not-allowed;
 }
+/* Add these styles in your CSS or SCSS file */
+
+.profile-link {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  color: #fff; /* Adjust the color as needed */
+  padding: 8px 12px; /* Adjust the padding as needed */
+}
+
+.profile-icon {
+  width: 32px; /* Adjust the width and height as needed */
+  height: 32px;
+  border-radius: 50%; /* Make it round */
+  margin-right: 8px; /* Adjust the margin as needed */
+}
+
 
 .success-message {
   color: green;

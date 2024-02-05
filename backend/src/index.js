@@ -10,6 +10,7 @@ const bodyParser = require('body-parser');
 const multer = require("multer");
 // Import controllers
 const authController = require('./controllers/authController');
+const moviescontroller=require('./controllers/moviescontroller')
 const profileController = require('./controllers/profileController');
 
 // Initialize Firebase
@@ -55,8 +56,25 @@ const upload = multer({ storage: storage });
 app.post('/login', authController.login);
 app.post('/logout', authController.logout);
 app.post('/signup',  upload.single('file'),authController.uploadMiddleware, authController.signup);
+app.post('/moviesUpload',upload.single('file'),authController.uploadMiddleware,moviescontroller.addMovie);
+app.post('/getAllMovies',moviescontroller.getAllMovies); 
+
 app.post('/checkEmail', authController.checkEmail);
 app.post('/profile', authController.authenticate, profileController.profile);
+
+
+// API endpoint to get user details by ID
+app.get('/api/users/:id', profileController.profile)
+
+// Serve React app in production
+if (process.env.NODE_ENV === 'production') {
+  app.use(express.static('client/build'));
+
+  app.get('*', (req, res) => {
+    res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'));
+  });
+}
+
 
 // Start the server
 app.listen(port, () => {

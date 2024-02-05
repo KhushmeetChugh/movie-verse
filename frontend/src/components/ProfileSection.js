@@ -1,61 +1,103 @@
-import React from 'react';
-// import 'bootstrap/dist/css/bootstrap.min.css';
-import '../index.css';
+import React, { useEffect, useState } from "react";
+import { Container, Row, Col, Card,Button } from "react-bootstrap";
 
-const Profile = () => {
-  const hclick=async()=>{
-    const response = await fetch("http://localhost:4000/profile", {
-          method: "POST",
-          headers: {
-            'Content-Type': 'application/json',
-            'Cookie': document.cookie,
-          },
-          credentials: "include",
-          // body: JSON.stringify({
-          //   email: email,
-          //   password: password,
-          // }),
-        });
-        
-        const responseData = await response.json();
+const ProfilePage = ({ userId }) => {
+  const [user, setUser] = useState(null);
+  const [showProfile, setShowProfile] = useState(false);
+  const [clickCount, setClickCount] = useState(0);
 
-      // Do something with the responseData, e.g., update UI, redirect, etc.
-      console.log(responseData);
+  const handleLogout = async () => {
+    try {
+      // Perform a fetch to the /logout route on your server
+      const response = await fetch("http://localhost:4000/logout", {
+        method: "POST",
+        credentials: "include", // Include credentials for sending cookies
+      });
+  
+      if (response.ok) {
+        // Handle successful logout, e.g., redirect the user
+        console.log("Logout successful!");
+  
+        // Refresh the page and go to the home page
+        window.location.href = "/";
+      } else {
+        // Handle failed logout, e.g., display an error message
+        console.error("Logout failed:", await response.text());
+      }
+    } catch (error) {
+      console.error("Error during logout:", error);
+    }
+  };
+  
+  useEffect(() => {
+    const checkCookies = () => {
+      const cookies = document.cookie;
+      console.log(cookies);
+      // Example: Check for a cookie named "your_cookie_name"
+      if (!cookies.includes("Login")) {
+        // Cookie not present, handle accordingly (prevent fetching user profile)
+        console.error("Cookies are not present");
+        setShowProfile(false);
+        return;
+      } else {
+        console.log("cokkies found");
+      }
+      // Continue with fetching user profile if cookies are present
+      fetchUser();
+    };
 
-  }
+    const fetchUser = async () => {
+      if (!userId) {
+        console.error("User ID is not available");
+        return;
+      }
+
+      try {
+        const response = await fetch(
+          `http://localhost:4000/api/users/${userId}`
+        );
+        const data = await response.json();
+        setUser(data);
+        setShowProfile(true); // Display the profile when user data is available
+      } catch (error) {
+        console.error("Error fetching user data:", error);
+      }
+    };
+
+    checkCookies();
+  }, [userId]);
+
+  const handleCardClick = () => {
+    setClickCount((prevCount) => prevCount + 1);
+
+    // Toggle the profile visibility on a single press
+    if (clickCount === 1) {
+      setShowProfile((prevShowProfile) => !prevShowProfile);
+    }
+
+    // Reset click count after a short delay
+    setTimeout(() => setClickCount(0), 300);
+  };
+
   return (
-    <div className="container mt-5">
-      <div className="row">
-        <div className="col-md-4">
-          {/* Profile Photo */}
-          <div className="text-center mb-4">
-            <img src="https://www.the-sun.com/wp-content/uploads/sites/6/2022/08/MF-Netflix-Wednesday-Cast-OFFPLAT.jpg?strip=all&quality=100&w=1920&h=1080&crop=1" alt="Profile Photo" className="img-fluid rounded-circle" style={{ width: '150px', height: '150px' }} />
-          </div>
-        </div>
-        <div className="col-md-8">
-          {/* Username */}
-          <h2 className="mb-3" onClick={hclick}>Username</h2>
-
-          {/* Movies Reviewed */}
-          <div className="mb-4">
-            <h4>Movies Reviewed</h4>
-            <ul>
-              <li>Movie 1</li>
-              <li>Movie 2</li>
-              <li>Movie 3</li>
-              {/* Add more movies as needed */}
-            </ul>
-          </div>
-
-          {/* Points Section */}
-          <div>
-            <h4>Points</h4>
-            <p>Points: 100</p>
-          </div>
-        </div>
-      </div>
-    </div>
+    <Container>
+      <Row className="mt-5">
+        <Col md={{ span: 6, offset: 3 }}>
+          {showProfile && (
+            <Card onClick={handleCardClick}>
+              <Card.Img variant="top" src={user?.profilePictureURL} />
+              <Card.Body>
+                <Card.Title>{user?.username}</Card.Title>
+                <Card.Text>Emaile: {user?.email}</Card.Text>
+                <Card.Text>Role: {user?.role}</Card.Text>
+                <Button className="danger" onClick={handleLogout}>Logout</Button>
+              </Card.Body>
+            </Card>
+          )}
+        </Col>
+      </Row>
+    </Container>
   );
 };
 
-export default Profile;
+export default ProfilePage;

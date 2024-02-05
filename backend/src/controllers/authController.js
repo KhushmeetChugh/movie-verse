@@ -32,15 +32,19 @@ const login = async (req, res) => {
 
     if (isPasswordMatch) {
       // Set a cookie with the user's name
-      const token = jwt.sign({ email: existingUser.email, userId: existingUser.id }, 'your-secret-key', { expiresIn: '1h' });
+      const token = jwt.sign({ email: existingUser.email, userId: existingUser.id,imgUrl:existingUser.profilePictureURL }, 'your-secret-key', { expiresIn: '1h' });
 
       // Set the cookie in the response header
-      res.cookie('token', token, {
-        httpOnly: true,
+      res.cookie('Login', token, {
+        httpOnly: false,
         secure: true,
         maxAge: 3600000, // 1 hour expiration
       });
+
       res.json({
+        uid:existingUser.id,
+        imgUrl:existingUser.profilePictureURL,
+        role:existingUser.role,
         message: 'Logged in'
       });
     } else {
@@ -58,7 +62,7 @@ const logout = (req, res) => {
   // Clear the authentication-related cookies
   res.clearCookie('user_id');
   res.clearCookie('token');
-
+  res.clearCookie('Login');
   // Send a response to the client
   res.status(200).json({ message: 'Logout successful!' });
   // ... existing logout route logic ...
