@@ -16,6 +16,7 @@ const profileController = require('./controllers/profileController');
 
 // Initialize Firebase
 const firebaseConfig = require("./config/firebase-config");
+const User = require("./models/userModel");
 initializeApp(firebaseConfig);
 
 // Create Express app
@@ -30,7 +31,7 @@ mongoose.connect(mongoURI, {
 })
   .then(() => console.log("MongoDB connected"))
   .catch(error => console.error('MongoDB connection error:', error));
-
+  
 // Middleware
 app.use(cors({
   origin: 'http://localhost:3000',  // Replace with your frontend URL
@@ -64,7 +65,7 @@ app.post('/profile', authController.authenticate, profileController.profile);
 app.post('/getMoviesByGenre', moviescontroller.getMoviesByGenre);
 app.post('/addMovieToGenre', moviescontroller.addMovieToGenre);
 app.get('/movie/:m_id', moviescontroller.moviepage);
-
+app.get('/watchlist/:userId',profileController.watchlist)
 
 // API endpoint to get user details by ID
 app.get('/api/users/:id', profileController.profile)

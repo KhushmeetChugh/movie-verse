@@ -104,8 +104,8 @@ const MovieCard = ({ genre }) => { // Accept genre as a parameter
 const styles = {
   moviesList: {
     display: 'flex',
-    flexWrap: 'wrap',
-    justifyContent: 'space-around',
+    // flexWrap: 'wrap',
+    // justifyContent: 'space-around',
     overflowX: 'auto', // Enable horizontal scrolling
     maxHeight: 'calc(100vh - 100px)', // Adjust the max height as needed
   },

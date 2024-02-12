@@ -72,7 +72,7 @@ const addMovieToGenre = async (genreName, movieId) => {
     // Save the genre document
     await genre.save();
 
-    console.log(`Movie with ID ${movieId} added to genre ${trimmedGenreName}`);
+    // console.log(`Movie with ID ${movieId} added to genre ${trimmedGenreName}`);
   } catch (error) {
     console.error('Error adding movie to genre:', error);
   }

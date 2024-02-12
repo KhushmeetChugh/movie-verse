@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from "react";
-import { Container, Row, Col, Card,Button } from "react-bootstrap";
+import { Container, Row, Col, Card } from "react-bootstrap";
+import { Link } from "react-router-dom";
+// import "./ind"; // Import the CSS file for styling
 
 const ProfilePage = ({ userId }) => {
   const [user, setUser] = useState(null);
@@ -8,41 +10,29 @@ const ProfilePage = ({ userId }) => {
 
   const handleLogout = async () => {
     try {
-      // Perform a fetch to the /logout route on your server
       const response = await fetch("http://localhost:4000/logout", {
         method: "POST",
-        credentials: "include", // Include credentials for sending cookies
+        credentials: "include",
       });
-  
+
       if (response.ok) {
-        // Handle successful logout, e.g., redirect the user
-        console.log("Logout successful!");
-  
-        // Refresh the page and go to the home page
         window.location.href = "/";
       } else {
-        // Handle failed logout, e.g., display an error message
         console.error("Logout failed:", await response.text());
       }
     } catch (error) {
       console.error("Error during logout:", error);
     }
   };
-  
+
   useEffect(() => {
-    const checkCookies = () => {
+    const checkCookies = async () => {
       const cookies = document.cookie;
-      console.log(cookies);
-      // Example: Check for a cookie named "your_cookie_name"
       if (!cookies.includes("Login")) {
-        // Cookie not present, handle accordingly (prevent fetching user profile)
-        console.error("Cookies are not present");
         setShowProfile(false);
         return;
-      } else {
-        console.log("cokkies found");
       }
-      // Continue with fetching user profile if cookies are present
+
       fetchUser();
     };
 
@@ -58,7 +48,7 @@ const ProfilePage = ({ userId }) => {
         );
         const data = await response.json();
         setUser(data);
-        setShowProfile(true); // Display the profile when user data is available
+        setShowProfile(true);
       } catch (error) {
         console.error("Error fetching user data:", error);
       }
@@ -70,27 +60,30 @@ const ProfilePage = ({ userId }) => {
   const handleCardClick = () => {
     setClickCount((prevCount) => prevCount + 1);
 
-    // Toggle the profile visibility on a single press
     if (clickCount === 1) {
       setShowProfile((prevShowProfile) => !prevShowProfile);
     }
 
-    // Reset click count after a short delay
     setTimeout(() => setClickCount(0), 300);
   };
 
   return (
     <Container>
-      <Row className="mt-5">
-        <Col md={{ span: 6, offset: 3 }}>
+      <Row className="mt-5 justify-content-center">
+        <Col md={6}>
           {showProfile && (
             <Card onClick={handleCardClick}>
               <Card.Img variant="top" src={user?.profilePictureURL} />
               <Card.Body>
                 <Card.Title>{user?.username}</Card.Title>
-                <Card.Text>Emaile: {user?.email}</Card.Text>
+                <Card.Text>Email: {user?.email}</Card.Text>
                 <Card.Text>Role: {user?.role}</Card.Text>
-                <Button className="danger" onClick={handleLogout}>Logout</Button>
+                <Link to={`/watchlist/${userId}`} className="watchlist-link">
+                  My Watchlist
+                </Link>
+                <button className="btn btn-danger" onClick={handleLogout}>
+                  Logout
+                </button>
               </Card.Body>
             </Card>
           )}
