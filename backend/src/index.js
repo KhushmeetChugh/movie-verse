@@ -13,6 +13,7 @@ const authController = require('./controllers/authController');
 const moviescontroller=require('./controllers/moviescontroller')
 const profileController = require('./controllers/profileController');
 
+
 // Initialize Firebase
 const firebaseConfig = require("./config/firebase-config");
 initializeApp(firebaseConfig);
@@ -58,9 +59,11 @@ app.post('/logout', authController.logout);
 app.post('/signup',  upload.single('file'),authController.uploadMiddleware, authController.signup);
 app.post('/moviesUpload',upload.single('file'),authController.uploadMiddleware,moviescontroller.addMovie);
 app.post('/getAllMovies',moviescontroller.getAllMovies); 
-
 app.post('/checkEmail', authController.checkEmail);
 app.post('/profile', authController.authenticate, profileController.profile);
+app.post('/getMoviesByGenre', moviescontroller.getMoviesByGenre);
+app.post('/addMovieToGenre', moviescontroller.addMovieToGenre);
+app.get('/movie/:m_id', moviescontroller.moviepage);
 
 
 // API endpoint to get user details by ID
@@ -74,7 +77,10 @@ if (process.env.NODE_ENV === 'production') {
     res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'));
   });
 }
+app.post('/AddWatchList',authController.addWatchList);
 
+
+// Assuming `genreName` is the name of the genre and `movieId` is the ID of the movie
 
 // Start the server
 app.listen(port, () => {

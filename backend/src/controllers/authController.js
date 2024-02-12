@@ -126,6 +126,7 @@ const signup = async (req, res) => {
       password: hashedPassword,
       profilePictureURL,
       role: "user",
+    
     });
 
     await newUser.save();
@@ -188,6 +189,94 @@ const authenticate = async (req, res, next) => {
     return res.status(500).json({ message: 'Internal Server Error', errorType: error.constructor.name });
   }
 };
+const addWatchList = async (req, res) => {
+  const { movieId } = req.body;
+  
+  try {
+    // Extract the userId from the JWT payload in the 'Login' cookie
+    const userId = getUserIdFromCookie(req);
+    const initialUser = await User.findById(userId);
+    const initialWatchlist = initialUser.watchList;
+    if (initialWatchlist.includes(movieId)) {
+      console.log("ek kaam kitni vaar karega be")
+      return res.status(400).json({ message: "Movie already present in watchlist." });
+      
+    }
+    console.log("userId="+userId)
+
+    if (!userId) {
+      res.status(401).json({ message: 'User not authenticated' });
+      return;
+    }
+
+    // Perform database operation to add movieId to user's watchlist
+    // Example code assuming you have a User model with a findByIdAndUpdate method
+    
+    const updatedUser = await User.findByIdAndUpdate(
+      userId,
+      { $addToSet: { watchList: movieId } },
+      { new: true }
+    );
+    console.log("updatesuser"+updatedUser);
+    
+    if (updatedUser!=null) {
+      console.log("User updated:", updatedUser);
+      // Send OK response
+      res.status(201).json({message:"User updated successfully."});
+    } else {
+      console.log("kuch galat ho raha hai");
+      // Send message indicating that the movie is already present in the watchlist
+      res.status(400).json({message:"kuch toh galat hai code mein"});
+    }
+    
+    
+    
+  } catch (error) {
+    console.error('Error adding movie to watchlist:', error);
+    res.status(500).json({ message: 'Internal Server Error', errorType: error.constructor.name });
+  }
+};
+
+// Example function to extract userId from the JWT payload in the 'Login' cookie
+const getUserIdFromCookie = (req) => {
+  // Get the 'Cookie' header from the request
+  const cookieHeader = req.headers.cookies;
+
+  if (!cookieHeader) {
+    return null;
+  }
+
+  // Split the 'Cookie' header string into individual cookies
+  const cookies = cookieHeader.split(';');
+
+  // Find the cookie containing the JWT
+  const jwtCookie = cookies.find(cookie => cookie.trim().startsWith('Login='));
+
+  if (!jwtCookie) {
+    return null;
+  }
+
+  // Extract the JWT from the cookie
+  const token = jwtCookie.split('=')[1];
+  console.log("tok"+token);
+
+  try {
+    // Verify the JWT
+    const decoded = jwt.verify(token, 'your-secret-key');
+
+    // Extract the user ID from the decoded JWT payload
+    const userId = decoded.userId;
+
+    return userId;
+  } catch (error) {
+    console.error('Error verifying JWT:', error);
+    return null;
+  }
+};
 
 
-module.exports = { login, logout, signup, checkEmail, authenticate,uploadMiddleware};
+// Example usage
+
+
+
+module.exports = { login, logout, signup, checkEmail, authenticate,uploadMiddleware,addWatchList};

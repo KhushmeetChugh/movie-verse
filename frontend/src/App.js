@@ -4,8 +4,6 @@ import Footercomp from "./components/Footer";
 import Signin from "./components/Signin.js";
 import Signup from "./components/Signup";
 import Carosal from "./components/Carosal";
-import MoviePage from "./components/MoviePage";
-import Profile from "./components/ProfileSection.js";
 import LogoutButton from "./components/Logout.js";
 import ImageUpload from "./components/ImageUpload.js";
 import Addmovies from "./components/admincomp/Addmovies.js";
@@ -14,6 +12,8 @@ import ProfilePage from "./components/ProfileSection.js";
 import MovieCard from "./components/MovieCard.js";
 import Adminfeed from "./components/Adminfeed.js";
 import Userfeed from "./components/Userfeed.js";
+import MoviePage from "./components/MoviePage.js";
+import HomePage from "./components/MovieRow.js";
 
 function App() {
   const [userId,setuserId]=useState("");
@@ -75,12 +75,13 @@ function App() {
           <Route path="/signin" element={<Signin handleLogin={handleLogin}/>} />
           <Route path="/signup" element={<Signup />} />
           <Route path="/addmovies" element={<Addmovies/>}/>
-          <Route path="/movies" element={<MovieCard />} />
+          <Route path="/movies" element={<HomePage />} />
           <Route path="/userfeedback" element={<Userfeed/>} />
           <Route path="/adminfeedback" element={<Adminfeed />} />
           <Route path="/imgupload" element={<ImageUpload  />} />
           <Route path="/profile/:id" element={<ProfilePage userId={userId} />} />
           <Route path="/logout" element={<LogoutButton/>} />
+          <Route path="/movies/:movieId" element={<MoviePage/>} />
         </Routes>
         <Footercomp />
       </Router>

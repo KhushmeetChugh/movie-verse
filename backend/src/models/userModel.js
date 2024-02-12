@@ -21,6 +21,10 @@ const userSchema = new mongoose.Schema({
     type: String,
     default: 'user',
   },
+  watchList:{
+    type: [],
+    default: null
+  }
 });
 
 const User = mongoose.model('User', userSchema);
