@@ -22,7 +22,7 @@ function FileUpload() {
         console.error(`Error with status ${response.status}`, errorData);
       } else {
         const data = await response.json();
-        console.log("Success+", data);
+        // console.log("Success+", data);
         setMsg('File upload success');
       }
     } catch (error) {

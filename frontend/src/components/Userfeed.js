@@ -10,7 +10,7 @@ const UserFeedback = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     // You can handle the submission logic here
-    console.log("User feedback submitted:", feedback);
+    // console.log("User feedback submitted:", feedback);
     // Clear the feedback field after submission if needed
     setFeedback("");
     // You can navigate the user or show a thank you message

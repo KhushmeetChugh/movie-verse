@@ -111,7 +111,7 @@ const uploadMiddleware = async (req, res, next) => {
 const signup = async (req, res) => {
   try {
     const profilePictureURL = req.fileDownloadURL; // Assuming you have the URL from the file upload middleware
-    console.log(`Profile Picture URL: ${profilePictureURL}`);
+    // console.log(`Profile Picture URL: ${profilePictureURL}`);
 
     // Destructuring user details from the request body
     const { username, email, password } = req.body;
@@ -179,8 +179,8 @@ const authenticate = async (req, res, next) => {
 
     const decodedToken = jwt.verify(token, 'your-secret-key');
     // Use decodedToken to fetch additional data from MongoDB or perform other authentication logic
-    console.log('User email:', decodedToken.email);
-    console.log('User details:', decodedToken);
+    // console.log('User email:', decodedToken.email);
+    // console.log('User details:', decodedToken);
     req.body = decodedToken;
     // Continue with the next middleware or route handler
     next();
@@ -198,11 +198,11 @@ const addWatchList = async (req, res) => {
     const initialUser = await User.findById(userId);
     const initialWatchlist = initialUser.watchList;
     if (initialWatchlist.includes(movieId)) {
-      console.log("ek kaam kitni vaar karega be")
+      // console.log("ek kaam kitni vaar karega be")
       return res.status(400).json({ message: "Movie already present in watchlist." });
       
     }
-    console.log("userId="+userId)
+    // console.log("userId="+userId)
 
     if (!userId) {
       res.status(401).json({ message: 'User not authenticated' });
@@ -217,14 +217,14 @@ const addWatchList = async (req, res) => {
       { $addToSet: { watchList: movieId } },
       { new: true }
     );
-    console.log("updatesuser"+updatedUser);
+    // console.log("updatesuser"+updatedUser);
     
     if (updatedUser!=null) {
-      console.log("User updated:", updatedUser);
+      // console.log("User updated:", updatedUser);
       // Send OK response
       res.status(201).json({message:"User updated successfully."});
     } else {
-      console.log("kuch galat ho raha hai");
+      // console.log("kuch galat ho raha hai");
       // Send message indicating that the movie is already present in the watchlist
       res.status(400).json({message:"kuch toh galat hai code mein"});
     }
@@ -258,7 +258,7 @@ const getUserIdFromCookie = (req) => {
 
   // Extract the JWT from the cookie
   const token = jwtCookie.split('=')[1];
-  console.log("tok"+token);
+  // console.log("tok"+token);
 
   try {
     // Verify the JWT

@@ -72,7 +72,7 @@ const addMovieToGenre = async (genreName, movieId) => {
     // Save the genre document
     await genre.save();
 
-    console.log(`Movie with ID ${movieId} added to genre ${trimmedGenreName}`);
+    // console.log(`Movie with ID ${movieId} added to genre ${trimmedGenreName}`);
   } catch (error) {
     console.error('Error adding movie to genre:', error);
   }
@@ -81,17 +81,17 @@ const addMovieToGenre = async (genreName, movieId) => {
 
 const getMoviesByGenre = async (req, res) => {
   const { genre } = req.body;
-  console.log("genre=" + genre);
+  // console.log("genre=" + genre);
 
   try {
     const genreDocument = await Genre.findOne({ name: genre });
-    console.log("genreDocument=" + genreDocument);
+    // console.log("genreDocument=" + genreDocument);
     if (!genreDocument) {
       return res.status(404).json({ message: 'Genre not found' });
     }
 
     const movieIds = genreDocument.movieIds;
-    console.log("moviesIds=" + movieIds);
+    // console.log("moviesIds=" + movieIds);
 
     // Fetch all movie documents corresponding to the movieIds array
     const movies = await Movies.find({ _id: { $in: movieIds } });

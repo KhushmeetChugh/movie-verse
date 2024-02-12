@@ -38,7 +38,7 @@ app.post("/upload", upload.single("filename"), async (req, res) => {
 
         // Grab the public URL
         const downloadURL = await getDownloadURL(snapshot.ref);
-        console.log(`url=${downloadURL}`)
+        // console.log(`url=${downloadURL}`)
 
         console.log('File successfully uploaded.');
         return res.send({

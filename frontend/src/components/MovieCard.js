@@ -4,8 +4,8 @@ import { Link } from "react-router-dom";
 
 const MovieCard = ({ genre }) => { // Accept genre as a parameter
   const cookies = document.cookie;
-  console.log("cookies=" + cookies);
-  console.log("genre="+ genre);
+  // console.log("cookies=" + cookies);
+  // console.log("genre="+ genre);
 
   const [movies, setMovies] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -17,7 +17,7 @@ const MovieCard = ({ genre }) => { // Accept genre as a parameter
     if (!loggedIn) {
       alert("Not Logged In. Please Login First");
     } else {
-      console.log("MovieID", movieId);
+      // console.log("MovieID", movieId);
       const response = await fetch("http://localhost:4000/AddWatchList", {
         method: 'POST',
         headers: {
@@ -48,13 +48,13 @@ const MovieCard = ({ genre }) => { // Accept genre as a parameter
         });
         if (response.ok) {
           const data = await response.json();
-          console.log(data);
+          // console.log(data);
           
           if (Array.isArray(data)) {
             // Ensure that data is an array
             setMovies(data);
-            console.log('Data:', data)
-            console.log(movies);
+            // console.log('Data:', data)
+            // console.log(movies);
           } else {
             console.error('Data is not an array');
           }
@@ -77,7 +77,7 @@ const MovieCard = ({ genre }) => { // Accept genre as a parameter
       {loading && <p>Loading movies...</p>}
       {error && <p>Error: {error}</p>}
       {movies.map((movie) => {
-        console.log('Movie:', movie,"url=",movie); // Log each movie object
+        // console.log('Movie:', movie,"url=",movie); // Log each movie object
         return (
           <Nav key={movie}>
             <div style={styles.card}>

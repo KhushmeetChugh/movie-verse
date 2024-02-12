@@ -12,7 +12,7 @@ const Signin = ({ handleLogin }) => {
   const handler = async () => {
     try {
       const user = await handleLogin(email, password,setToken);
-      console.log(user)
+      // console.log(user)
 
       if (user && user.role === "user") {
         // Redirect to the home page for regular users

@@ -80,7 +80,7 @@ const Addmovies = () => {
       // Fetch the selected genres and add the movie ID to each genre
       for (const genreId of genre_ids) {
         const trimmedGenreId = genreId.split(/["[\]]/).join('');
-        console.log("trim="+trimmedGenreId)
+        // console.log("trim="+trimmedGenreId)
 
 
 

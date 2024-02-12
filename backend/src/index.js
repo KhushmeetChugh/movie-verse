@@ -12,6 +12,9 @@ const multer = require("multer");
 const authController = require('./controllers/authController');
 const moviescontroller=require('./controllers/moviescontroller')
 const profileController = require('./controllers/profileController');
+// const commentsController = require('./controllers/commentsController');
+const commentsController=require('./controllers/commentsController');
+
 
 
 // Initialize Firebase
@@ -26,7 +29,7 @@ const port = 4000;
 const mongoURI = 'mongodb+srv://Khushmeet:HN81zh74QFLme6q6@cluster0.jwzic4f.mongodb.net/?retryWrites=true&w=majority';
 mongoose.connect(mongoURI, {
   useNewUrlParser: true,
-  useUnifiedTopology: true,
+  socketTimeoutMS: 30000
 })
   .then(() => console.log("MongoDB connected"))
   .catch(error => console.error('MongoDB connection error:', error));
@@ -64,6 +67,8 @@ app.post('/profile', authController.authenticate, profileController.profile);
 app.post('/getMoviesByGenre', moviescontroller.getMoviesByGenre);
 app.post('/addMovieToGenre', moviescontroller.addMovieToGenre);
 app.get('/movie/:m_id', moviescontroller.moviepage);
+app.post('/comments/:movieId',commentsController.addComment);
+app.post('/getMovieComments',commentsController.getMovieComments);
 
 
 // API endpoint to get user details by ID
@@ -78,6 +83,7 @@ if (process.env.NODE_ENV === 'production') {
   });
 }
 app.post('/AddWatchList',authController.addWatchList);
+
 
 
 // Assuming `genreName` is the name of the genre and `movieId` is the ID of the movie

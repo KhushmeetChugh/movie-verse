@@ -32,7 +32,7 @@ const ProfilePage = ({ userId }) => {
   useEffect(() => {
     const checkCookies = () => {
       const cookies = document.cookie;
-      console.log(cookies);
+      // console.log(cookies);
       // Example: Check for a cookie named "your_cookie_name"
       if (!cookies.includes("Login")) {
         // Cookie not present, handle accordingly (prevent fetching user profile)

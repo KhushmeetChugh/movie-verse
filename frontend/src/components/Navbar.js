@@ -11,7 +11,7 @@ function Navcomp({ userId, profileUrl, role }) {
   useEffect(() => {
     const checkCookies = () => {
       const cookies = document.cookie;
-      console.log(cookies);
+      // console.log(cookies);
 
       // Example: Check for a cookie named "Login"
       if (!cookies.includes("Login")) {
@@ -21,7 +21,7 @@ function Navcomp({ userId, profileUrl, role }) {
         return;
       } else {
         setIsLoggedInCookie(true);
-        console.log("Cookies found");
+        // console.log("Cookies found");
       }
 
       // Assuming 'userId' is a prop passed to the component
@@ -44,9 +44,9 @@ function Navcomp({ userId, profileUrl, role }) {
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="me-auto">
             <Nav.Link as={Link} to="/">
-              {role == "admin" ? "AdminDashboard" : "Home"}
+              {role === "admin" ? "AdminDashboard" : "Home"}
             </Nav.Link>
-            {role == "admin" ? (
+            {role === "admin" ? (
               <Nav.Link as={Link} to="/addmovies">
                 Addmovies
               </Nav.Link>
@@ -56,7 +56,7 @@ function Navcomp({ userId, profileUrl, role }) {
             <Nav.Link as={Link} to="/movies">
               Movies
             </Nav.Link>
-            {role == "admin" ? (
+            {role === "admin" ? (
               <Nav.Link as={Link} to="/adminfeedback">
                 Feedback
               </Nav.Link>

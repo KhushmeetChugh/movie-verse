@@ -9,7 +9,6 @@ import ImageUpload from "./components/ImageUpload.js";
 import Addmovies from "./components/admincomp/Addmovies.js";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import ProfilePage from "./components/ProfileSection.js";
-import MovieCard from "./components/MovieCard.js";
 import Adminfeed from "./components/Adminfeed.js";
 import Userfeed from "./components/Userfeed.js";
 import MoviePage from "./components/MoviePage.js";
@@ -21,7 +20,7 @@ function App() {
   const [profileUrl,setProfileUrl]=useState("");
   
   const handleLogin = async (email, password, setToken) => {
-    console.log(`Logging in with email: ${email} and password: ${password}`);
+    // console.log(`Logging in with email: ${email} and password: ${password}`);
     try {
       const response = await fetch("http://localhost:4000/login", {
         method: "POST",
@@ -43,12 +42,12 @@ function App() {
       setProfileUrl(responseData.imgUrl);
       setRole(responseData.role);
   
-      console.log(responseData.imgUrl);
-      console.log(responseData.uid);
-      console.log(responseData.role);
+      // console.log(responseData.imgUrl);
+      // console.log(responseData.uid);
+      // console.log(responseData.role);
   
       if (response.ok) {
-        console.log(responseData.token);
+        // console.log(responseData.token);
         const token = responseData.token;
         setToken(token);
   
