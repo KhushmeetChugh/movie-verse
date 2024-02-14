@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Faculty Feedback Form</title>
+<style>
+body {
+font-family: Arial, sans-serif;
+margin: 20px;
+box-sizing: border-box;
+}
+h1{
+text-align: center;
+}
+form {
+max-width: 800px;
+margin: auto;
+box-shadow: 0px 0px 10px black;
+padding: 25px;
+border-radius: 5px;
+}
+label {
+display: inline-block;
+width: 140px;
+margin-bottom: 5px;
+}
+input, select, textarea {
+width: calc(100% - 150px);
+padding: 8px;
+margin-bottom: 15px;
+box-sizing: border-box;
+font-size: large;
+}
+input[type="radio"] {
+margin-bottom: 0;
+width: 10px;
+}
+.tainput{
+margin-top: 15px;
+display: flex;
+}
+textarea {
+resize: vertical;
+}
+button {
+background-color: #4CAF50;
+color: white;
+padding: 10px 15px;
+border: none;
+border-radius: 5px;
+cursor: pointer;
+text-align: center;
+margin: 2px 300px;
+}
+</style>
+</head>
+<body>
+
+<h1>Faculty Feedback Form</h1>
+<form>
+<label for="sname">Student Name:</label>
+<input type="text" id="sname" name="sname" required>
+
+<label for="semail">Student Email:</label>
+<input type="email" id="semail" name="semail" required>
+
+<label for="faculty">Select Faculty:</label>
+<select id="faculty" name="faculty" required>
+<option value="" disabled selected>Select Faculty</option>
+<option value="faculty1">Faculty 1</option>
+<option value="faculty2">Faculty 2</option>
+<option value="faculty3">Faculty 3</option>
+<option value="faculty4">Faculty 4</option>
+</select>
+
+<label for="rating">Rating:</label>
+<div>
+<input type="radio" id="Excellent" name="rating" value="Excellent" required>
+<label for="Excellent">Excellent</label>
+
+<input type="radio" id="Good" name="rating" value="Good" required>
+<label for="Good">Good</label>
+
+<input type="radio" id="Average" name="rating" value="Average" required>
+<label for="Average">Average</label>
+
+<input type="radio" id="Poor" name="rating" value="Poor" required>
+<label for="Poor">Poor</label>
+</div>
+
+<div class="tainput">
+<label for="positiveAspects">Positive Aspects:</label>
+<textarea id="positiveAspects" name="positiveAspects" rows="4" required></textarea>
+</div>
+
+<div class="tainput">
+<label for="areasForImprovement">Areas for Improvement:</label>
+<textarea id="areasForImprovement" name="areasForImprovement" rows="4" required></textarea>
+</div>
+
+<button type="submit">Submit Feedback</button>
+</form>
+
+</body>
+</html>
+

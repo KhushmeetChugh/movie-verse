@@ -19,6 +19,7 @@ const commentsController=require('./controllers/commentsController');
 
 // Initialize Firebase
 const firebaseConfig = require("./config/firebase-config");
+const User = require("./models/userModel");
 initializeApp(firebaseConfig);
 
 // Create Express app
@@ -33,7 +34,7 @@ mongoose.connect(mongoURI, {
 })
   .then(() => console.log("MongoDB connected"))
   .catch(error => console.error('MongoDB connection error:', error));
-
+  
 // Middleware
 app.use(cors({
   origin: 'http://localhost:3000',  // Replace with your frontend URL
@@ -70,6 +71,7 @@ app.get('/movie/:m_id', moviescontroller.moviepage);
 app.post('/comments/:movieId',commentsController.addComment);
 app.post('/getMovieComments',commentsController.getMovieComments);
 
+app.get('/watchlist/:userId',profileController.watchlist)
 
 // API endpoint to get user details by ID
 app.get('/api/users/:id', profileController.profile)

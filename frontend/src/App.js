@@ -13,6 +13,7 @@ import Adminfeed from "./components/Adminfeed.js";
 import Userfeed from "./components/Userfeed.js";
 import MoviePage from "./components/MoviePage.js";
 import HomePage from "./components/MovieRow.js";
+import Watchlist from "./components/Watchlist.js";
 
 function App() {
   const [userId,setuserId]=useState("");
@@ -81,6 +82,7 @@ function App() {
           <Route path="/profile/:id" element={<ProfilePage userId={userId} />} />
           <Route path="/logout" element={<LogoutButton/>} />
           <Route path="/movies/:movieId" element={<MoviePage/>} />
+          <Route path="/watchlist/:userId" element={<Watchlist/>} />
         </Routes>
         <Footercomp />
       </Router>

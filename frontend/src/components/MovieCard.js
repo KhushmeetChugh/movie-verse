@@ -104,10 +104,16 @@ const MovieCard = ({ genre }) => { // Accept genre as a parameter
 const styles = {
   moviesList: {
     display: 'flex',
-    flexWrap: 'wrap',
-    justifyContent: 'space-around',
+    // flexWrap: 'wrap',
+    // justifyContent: 'space-around',
     overflowX: 'auto', // Enable horizontal scrolling
-    maxHeight: 'calc(100vh - 100px)', // Adjust the max height as needed
+    maxHeight: 'calc(100vh - 100px)', 
+    scrollbarWidth: 'none', // Hide standard scrollbar (Firefox)
+    '-ms-overflow-style': 'none', // Hide standard scrollbar (IE and Edge)
+    '&::-webkit-scrollbar': { // Hide scrollbar for WebKit browsers (Chrome, Safari)
+    display: 'none',
+    }
+    // Adjust the max height as needed
   },
   card: {
     border: '1px solid #ddd',
