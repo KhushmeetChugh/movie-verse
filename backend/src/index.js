@@ -70,6 +70,7 @@ app.post('/addMovieToGenre', moviescontroller.addMovieToGenre);
 app.get('/movie/:m_id', moviescontroller.moviepage);
 app.post('/comments/:movieId',commentsController.addComment);
 app.post('/getMovieComments',commentsController.getMovieComments);
+app.post('/searchMovies',moviescontroller.searchMovies);
 
 app.get('/watchlist/:userId',profileController.watchlist)
 

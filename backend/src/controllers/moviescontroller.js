@@ -103,6 +103,32 @@ const getMoviesByGenre = async (req, res) => {
     res.status(500).json({ message: 'Internal server error' });
   }
 };
+// Assuming you have Mongoose and your Movie model set up in your backend
+
+const searchMovies = async (req, res) => {
+  try {
+    // Get the search query from the request body
+    const { movieString } = req.body;
+    console.log(`mvstring${movieString}`)
+
+    // Perform a partial string match search using a regular expression
+    const regex = new RegExp(`.*${movieString}.*`, 'i'); // 'i' flag for case-insensitive search
+
+    // Search for movies in the database using the regex
+    const movies = await Movies.find({ Mname: regex });
+    console.log("mvs="+movies);
+
+    // Extract movie IDs from the search results
+
+    // Respond with the array of movie IDs
+    res.status(200).json({ movies });
+  } catch (error) {
+    console.error('Error searching for movies:', error);
+    res.status(500).json({ error: 'An error occurred while searching for movies' });
+  }
+};
 
 
-module.exports = { addMovie, getAllMovies, moviepage, addMovieToGenre, getMoviesByGenre };
+
+
+module.exports = { addMovie, getAllMovies, moviepage, addMovieToGenre, getMoviesByGenre, searchMovies };
