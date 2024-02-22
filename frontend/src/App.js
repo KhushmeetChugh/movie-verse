@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Navcomp from "./components/Navbar";
 import Footercomp from "./components/Footer";
 import Signin from "./components/Signin.js";
@@ -16,12 +16,22 @@ import HomePage from "./components/MovieRow.js";
 import Watchlist from "./components/Watchlist.js";
 
 function App() {
-  const [userId,setuserId]=useState("");
-  const [role,setRole]=useState("");
-  const [profileUrl,setProfileUrl]=useState("");
-  
+  const [userId, setUserId] = useState("");
+  const [role, setRole] = useState("");
+  const [profileUrl, setProfileUrl] = useState("");
+
+  useEffect(() => {
+    // Retrieve user information from local storage on component mount
+    const storedUserId = localStorage.getItem("userId");
+    const storedRole = localStorage.getItem("role");
+    const storedProfileUrl = localStorage.getItem("profileUrl");
+
+    if (storedUserId) setUserId(storedUserId);
+    if (storedRole) setRole(storedRole);
+    if (storedProfileUrl) setProfileUrl(storedProfileUrl);
+  }, []); // Run only once on component mount
+
   const handleLogin = async (email, password, setToken) => {
-    // console.log(`Logging in with email: ${email} and password: ${password}`);
     try {
       const response = await fetch("http://localhost:4000/login", {
         method: "POST",
@@ -34,39 +44,35 @@ function App() {
         }),
         credentials: "include",
       });
-  
-      // Assuming response is in JSON format
+
       const responseData = await response.json();
-  
-      // Do something with the responseData, e.g., update UI, redirect, etc.
-      setuserId(responseData.uid);
+
+      setUserId(responseData.uid);
       setProfileUrl(responseData.imgUrl);
       setRole(responseData.role);
-  
-      // console.log(responseData.imgUrl);
-      // console.log(responseData.uid);
-      // console.log(responseData.role);
-  
+
+      // Store user information in local storage
+      localStorage.setItem("userId", responseData.uid);
+      localStorage.setItem("role", responseData.role);
+      localStorage.setItem("profileUrl", responseData.imgUrl);
+
       if (response.ok) {
-        // console.log(responseData.token);
         const token = responseData.token;
         setToken(token);
-  
         return {
           uid: responseData.uid,
           imgUrl: responseData.imgUrl,
           role: responseData.role,
         };
       } else {
-        console.log(await response.text()); // Log the response text for error cases
+        console.log(await response.text());
       }
     } catch (err) {
       console.error("Error during login:", err);
     }
   };
-  
+
   return (
-    
     <>
       <Router>
         <Navcomp userId={userId} profileUrl={profileUrl} role={role}/>
