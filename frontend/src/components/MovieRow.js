@@ -14,7 +14,6 @@ const HomePage = () => {
 
   // Function to handle search submission
   const handleSearch = async () => {
-    
     if (searchQuery.trim() === '') {
       // If search query is empty, show default homepage
       setSearchResults([]);
@@ -24,18 +23,16 @@ const HomePage = () => {
 
     // Call backend API to search for movies
     try {
-      console.log(`search=${searchQuery}`)
       setIsSearching(true);
-      const response = await fetch("http://localhost:4000/searchMovies",{
-        method :'POST',
+      const response = await fetch("http://localhost:4000/searchMovies", {
+        method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({movieString:searchQuery}),
+        body: JSON.stringify({ movieString: searchQuery }),
       });
       const data = await response.json();
       setSearchResults(data.movies);
-      console.log("movies"+searchResults)      
     } catch (error) {
       console.error('Error searching for movies:', error);
       // Handle error
@@ -59,16 +56,29 @@ const HomePage = () => {
       </div>
 
       {/* Display search results or default homepage */}
+      {isSearching ? (
+        <p>Loading...</p>
+      ) : searchQuery.trim() !== '' ? (
         <div>
-          {/* Display default homepage */}
+          {/* Display search results */}
+          {searchResults.map((movie) => (
+            <MovieCard key={movie.id} movie={movie} />
+          ))}
+        </div>
+      ) : (
+        <div>
+          {/* Display all movies */}
           {genres.map((genre, index) => (
             <div key={index} style={styles.genreSection}>
               <h2 style={styles.genreTitle}>{genre}</h2>
-              <MovieCard genre={genre} /> {/* Pass genre as a prop to MovieCard */}
+              {/* Render all movies for this genre */}
+              {genres.map((movie) => (
+                <MovieCard key={movie.id} movie={movie} />
+              ))}
             </div>
           ))}
         </div>
-      
+      )}
     </div>
   );
 };

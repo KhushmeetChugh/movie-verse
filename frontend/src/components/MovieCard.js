@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Nav from "react-bootstrap/Nav";
 import { Link } from "react-router-dom";
+// import {MovieCard} from "/MovieCard.js"
 
 const MovieCard = ({ genre }) => { // Accept genre as a parameter
   const cookies = document.cookie;
@@ -88,7 +89,7 @@ const MovieCard = ({ genre }) => { // Accept genre as a parameter
                 <h3 style={styles.title}>{movie.Mname}</h3>
                 <p style={styles.genre}>Genre: {movie.genre_ids}</p>
                 <p style={styles.rating}>Rating: {movie.rating}</p>
-                <button onClick={() => addWatchList(movie._id)}>Add To WatchList</button>
+                <button onClick={() => MovieCard.addWatchList(movie._id)}>Add To WatchList</button>
               </div>
             </div>
           </Nav>
