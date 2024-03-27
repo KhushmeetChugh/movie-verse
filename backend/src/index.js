@@ -31,6 +31,8 @@ const mongoURI = 'mongodb+srv://Khushmeet:HN81zh74QFLme6q6@cluster0.jwzic4f.mong
 mongoose.connect(mongoURI, {
   useNewUrlParser: true,
   socketTimeoutMS: 30000
+
+  
 })
   .then(() => console.log("MongoDB connected"))
   .catch(error => console.error('MongoDB connection error:', error));
